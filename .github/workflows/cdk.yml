@@ -7,15 +7,15 @@ on:
   pull_request:
 jobs:
   aws_cdk:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
 
       - name: Setup Node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
-          node-version: '10.x'
+          node-version: '18.x'
 
       - name: Setup dependencies
         run: npm ci
@@ -31,7 +31,7 @@ jobs:
         if: contains(github.event_name, 'pull_request')
         run: npm run cdk:diff
         env:
-          AWS_DEFAULT_REGION: 'ap-northeast-1'
+          AWS_DEFAULT_REGION: 'us-west-1'
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
@@ -39,6 +39,6 @@ jobs:
         if: contains(github.event_name, 'push')
         run: npm run cdk:deploy
         env:
-          AWS_DEFAULT_REGION: 'ap-northeast-1'
+          AWS_DEFAULT_REGION: 'us-west-1'
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
