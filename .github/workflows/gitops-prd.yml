@@ -1,10 +1,14 @@
-name: cdk
+name: GitOps for production
 
 on:
   push:
-    branches:
-        - main
-  pull_request:
+    paths-ignore:
+      - '.github/**'
+      - '!.github/workflows/gitops-stg.yml'
+      - '**.md'
+    tags:
+    - v*
+
 jobs:
   aws_cdk:
     runs-on: ubuntu-22.04
